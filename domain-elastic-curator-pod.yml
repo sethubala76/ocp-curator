@@ -1,0 +1,22 @@
+kapiVersion: v1
+kind: Pod
+metadata:
+  name: domain-elastic-curator-pod
+spec:
+  containers:
+    - name: curator
+      image: <artifact.domain.name>.com/domain-elastic-curator-pod
+      resources: 
+        limits: 
+            cpu: 200m 
+            memory: 200Mi 
+        requests: 
+            cpu: 100m 
+            memory: 100Mi	  
+      env:
+        - name: ES_USER_PWD
+          valueFrom:
+            secretKeyRef:
+              name: es-curator-secret
+              key: es_usr_pwd
+  restartPolicy: Never

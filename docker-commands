@@ -1,0 +1,18 @@
+docker build -t <artifact domain.name>:5000/domain-elastic-curator .
+docker push <artifact domain.name>:5000/domain-elastic-curator
+
+#sample artifcate commands
+
+#!/bin/bash
+for file in `find ./ -type f`
+do
+export md5=$( md5sum ${file}|cut -f1 -d' ' )
+filename=$( echo ${file}|sed 's#./##' )
+curl -X PUT -T ${file} -H "Content-MD5: ${md5}" -u <username>:<password> http://<artifact.domain.name>:8081/artifactory/<subfolder>/fix-patch/<product-folder>/${filename}
+done
+========
+exec 3<> /tmp/foo
+echo "test" >&3
+exec 3>&-
+cat 3
+cat '&3'
